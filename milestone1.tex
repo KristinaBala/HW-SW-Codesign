@@ -1,0 +1,96 @@
+\documentclass[12pt]{article}
+\usepackage[left=15mm, right=15mm]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[latin1]{inputenc}
+
+\begin{document}
+\title{High-Level Synthesis and ASAP and ALAP Scheduling}
+\maketitle
+
+\section{Architectural-Level Synthesis and Optimization}
+
+
+Synthesis and optimization of circuits at the architectural level.\\
+
+Techniques for transforming an abstract model of circuit behavior into data path and control unit.\\
+
+Data path - interconnection of resources (implementing arithmetic or logic functions) whose execution times and I/O data are determined by the control unit according to a SCHEDULE.\\
+
+Architectural synthesis:
+
+\begin{itemize}
+  \item Structural view of the circuit, its data path
+  \item A logic-level specification of its control unit\\
+\end{itemize}
+
+Circuit implementation:
+\begin{itemize}
+
+  \item Area
+  \item Cycle-time (clock period)
+  \item Latency (i.e. nr of cycles to perform all operations)
+  \item Throughput (i.e. the computation rate)\\
+\end{itemize}
+
+Circuit specifications for architectural synthesis\\
+
+1. Behavioral-level circuit models
+
+2. Details about the recourses being used
+
+3. Constraints
+
+\section{Scheduling}
+
+Scheduling is a very important problem in architectural synthesis.\\
+
+-the task of determining the start of times, subject to the precedence constraints specified by the sequencing graph\\
+
+\textbf{Sequencing graph} – prescribes only the dependencies among operations\\
+
+\textbf{Scheduling of sequencing graph}:
+
+\begin{itemize}
+
+\item determines the precise time of each task
+\item concurrency of resulting implementation
+\item affects the area of implementation (the max nr of concurrent operations of any given type at any step of the schedule is a lower bound on the number of required hardware resource)
+\end{itemize}
+
+\subsection{Scheduling without resource constraints}
+
+applied when:
+
+\begin{itemize}
+\item dedicated resources are used
+\subitem	when operators differ in their types
+\subitem 	or when their cost is marginal when compared to that of steering logic, registers. Wiring and control
+\item	resource binding is done prior to scheduling and resource conflicts are solved by serializing the operations that share the same resource.
+\subitem The area cost of implementation is defined before and independently from the scheduling step
+\end{itemize}
+Used to:\\
+
+-derive bounds on latency for constrained problems\\
+
+ the minimum latency of a schedule under some resource constraint is at least as large as the latency computed with unlimited resources\\
+
+\subsubsection{Unconstrained Scheduling: The ASAP Scheduling Algorithm}
+\begin{itemize}
+\item The start time for each operation is the least one allowed by the dependencies
+\item Optimize the overall latency of the computation without caring about the number of resources required
+\item Finding the longest path between each operation and the source node
+\item Starting each operation in a CDFG (Control Data Flow Graph) as soon as its predecessors have completed\\
+\end{itemize}
+
+
+\subsubsection{Latency-Constrained Scheduling: The ALAP Scheduling Algorithm}
+\begin{itemize}
+\item Schedule operations at the latest opportunity
+\item Seeking the longest path between each operation and the end or “sink” node.
+\item Schedule start times can be derived by subtracting the longest path time from the desired overall latency constraint
+
+\end{itemize}
+
+\end{document}
